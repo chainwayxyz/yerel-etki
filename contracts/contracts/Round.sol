@@ -27,10 +27,48 @@ contract RoundContract is Ownable {
     //  id -> donations
     mapping(uint16 => uint256[]) public grantDonations;
 
+    //  MODIFIERS
+
+    modifier beforeRoundStart() {
+        require(block.timestamp < startTime, "Round already started!");
+        _;
+    }
+
+    modifier onlyGrantOwner(uint16 _id) {
+        require(grants[_id].owner == msg.sender);
+        _;
+    }
+
     constructor(uint256 _startTime, uint256 _endTime, IERC20 _donationToken, address _payoutContractAddr) {
         startTime = _startTime;
         endTime = _endTime;
         donationToken = _donationToken;
         payoutContractAddr = _payoutContractAddr;
+    }
+
+
+    //  GRANT FUNCTIONS
+
+    function registerGrant(address _owner, address _payee, string memory _ipfsURL) public beforeRoundStart() {
+        grants[grantCount] = Grant(grantCount, _owner, uint48(block.timestamp), uint48(block.timestamp), _payee, _ipfsURL);
+        ++grantCount;
+    }
+    
+    function updateGrantOwner(uint16 _id, address _newOwner) public beforeRoundStart onlyGrantOwner(_id) {
+        Grant storage grant = grants[_id];
+        grant.owner = _newOwner;
+        grant.lastUpdated = uint48(block.timestamp);
+    }
+
+    function updateGrantPayee(uint16 _id, address _newPayee) public beforeRoundStart onlyGrantOwner(_id){
+        Grant storage grant = grants[_id];
+        grant.payee = _newPayee;
+        grant.lastUpdated = uint48(block.timestamp);
+    }
+
+    function updateGrantIPFSURL(uint16 _id, string memory _newURL) public beforeRoundStart onlyGrantOwner(_id){
+        Grant storage grant = grants[_id];
+        grant.ipfsURL = _newURL;
+        grant.lastUpdated = uint48(block.timestamp);
     }
 }
