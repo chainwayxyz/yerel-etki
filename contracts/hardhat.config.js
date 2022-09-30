@@ -1,3 +1,4 @@
+require('@openzeppelin/hardhat-upgrades');
 require("@nomicfoundation/hardhat-toolbox");
 
 // The next line is part of the sample project, you don't need it in your
