@@ -7,8 +7,6 @@ contract Round is Ownable {
     //  Start of donations, grants should be registered before startTime
     uint256 public immutable startTime;
     uint256 public immutable endTime;
-    IERC20 public immutable donationToken;
-    address payoutContractAddr; // maybe impl. interface
 
     struct Grant {
         uint16 id;
@@ -27,6 +25,12 @@ contract Round is Ownable {
     //  id -> donations
     mapping(uint16 => uint256[]) public grantDonations;
 
+
+    //  EVENTS
+    event GrantRegistration(address owner, address payee, string ipfsURL);
+    event Donation(address donator, uint256 amount);
+
+
     //  MODIFIERS
 
     modifier beforeRoundStart() {
@@ -39,19 +43,19 @@ contract Round is Ownable {
         _;
     }
 
-    constructor(uint256 _startTime, uint256 _endTime, IERC20 _donationToken, address _payoutContractAddr) {
+    constructor(uint256 _startTime, uint256 _endTime) {
         startTime = _startTime;
         endTime = _endTime;
-        donationToken = _donationToken;
-        payoutContractAddr = _payoutContractAddr;
     }
 
 
     //  GRANT FUNCTIONS
 
-    function registerGrant(address _owner, address _payee, string memory _ipfsURL) public beforeRoundStart() {
-        grants[grantCount] = Grant(grantCount, _owner, uint48(block.timestamp), uint48(block.timestamp), _payee, _ipfsURL);
+    function registerGrant( address _payee, string memory _ipfsURL) public beforeRoundStart() {
+        grants[grantCount] = Grant(grantCount, msg.sender, uint48(block.timestamp), uint48(block.timestamp), _payee, _ipfsURL);
         ++grantCount;
+
+        emit GrantRegistration(msg.sender, _payee, _ipfsURL);
     }
     
     function updateGrantOwner(uint16 _id, address _newOwner) public beforeRoundStart onlyGrantOwner(_id) {
@@ -72,16 +76,17 @@ contract Round is Ownable {
         grant.lastUpdated = uint48(block.timestamp);
     }
 
-    function donate(uint16 _id, uint256 _amount) public {
+    function donate(uint16 _id) public payable{
         require(startTime <= block.timestamp, "Round hasn't started yet!");
         require(block.timestamp < endTime, "Round ended!");
         require(grants[_id].id == _id, "Grant does not exist!");
 
-        donationToken.transferFrom(msg.sender, address(this), _amount);
+        grantDonations[_id].push(msg.value);
 
-        grantDonations[_id].push(_amount);
+        emit Donation(msg.sender, msg.value);
     }
 
+    
     //  SYSTEM HELPERS
 
     //  To be used in the UI

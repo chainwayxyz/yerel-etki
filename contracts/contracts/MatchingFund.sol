@@ -15,11 +15,11 @@ contract MatchingFund is Ownable {
     }
 
     function donate() public payable {
-        require(!paidOut, "Pool already paid out!")
+        require(!paidOut, "Pool already paid out!");
         emit Donation(msg.sender, msg.value);
     }
 
-    function payout(address _payoutAddr) payable onlyOwner {
+    function payout(address _payoutAddr) public  payable onlyOwner {
         paidOut = true;
         emit Payout(_payoutAddr, address(this).balance);
     }
