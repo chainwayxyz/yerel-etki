@@ -29,6 +29,7 @@ contract Round is Ownable {
     //  EVENTS
     event GrantRegistration(address owner, address payee, string ipfsURL);
     event Donation(address donator, uint256 amount);
+    event Payout(address payoutCtc, uint256 amount);
 
 
     //  MODIFIERS
@@ -84,6 +85,14 @@ contract Round is Ownable {
         grantDonations[_id].push(msg.value);
 
         emit Donation(msg.sender, msg.value);
+    }
+
+    function payout(address _payoutAddress) public onlyOwner {
+        require(endTime < block.timestamp, "Round hasn't end yet!");
+
+        _payoutAddr.transfer(address(this).balance);
+
+        emit Payout(_payoutAddr, address(this).balance);
     }
 
     

@@ -20,7 +20,10 @@ contract MatchingFund is Ownable {
     }
 
     function payout(address _payoutAddr) public  payable onlyOwner {
+        _payoutAddr.transfer(address(this).balance);
+        
         paidOut = true;
+
         emit Payout(_payoutAddr, address(this).balance);
     }
 }
