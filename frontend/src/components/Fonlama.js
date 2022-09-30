@@ -11,6 +11,7 @@ import {  useParams
 } from "react-router-dom";
 
 import { fonlamalar } from "../data/fonlamalar.js";
+import { projeler } from "../data/projeler.js";
 import Clock from "./Clock";
 
 import Grid from '@mui/material/Grid';
@@ -32,7 +33,9 @@ export default function Fonlama() {
     let { id } = useParams();
 
     const fonlama = fonlamalar[id];
-    const projects = fonlama.projects;
+    const projects = fonlama.projects.map(function (project_id){projeler[project_id].project_id = project_id; return projeler[project_id]});
+
+
     let deadline =fonlama.deadline;
 
     let fonDurumu;
@@ -45,7 +48,7 @@ export default function Fonlama() {
             <Grid container spacing={2}>
                 {projects.map((project) => (
                     <Grid item xs={4}>
-                        <MediaCard title={project.title} description={project.description} image={project.image} link={project.link} status={project.status} />
+                        <MediaCard title={project.title} description={project.description} image={project.image} link={"/fon/" + id +"/proje/"+project.project_id} status={project.status} />
                     </Grid>
                 ))}
             </Grid>
@@ -64,7 +67,7 @@ export default function Fonlama() {
             <Grid container spacing={2}>
                 {projects.map((project) => (
                     <Grid item xs={4}>
-                        <MediaCard title={project.title} description={project.description} image={project.image} link={project.link} status={project.status} />
+                        <MediaCard title={project.title} description={project.description} image={project.image} link={"/fon/" + id +"/proje/"+project.project_id} status={project.status} />
                     </Grid>
                 ))}
             </Grid>

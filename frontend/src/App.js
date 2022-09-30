@@ -27,6 +27,7 @@ import {
 
 import Fonlamalar from './components/Fonlamalar';
 import Fonlama from './components/Fonlama';
+import Proje from './components/Proje';
 import Anasayfa from './components/Anasayfa';
 
 
@@ -210,6 +211,7 @@ const App = () => {
         <Routes>
           <Route path="/fonlamalar" element={<Fonlamalar />}/>
           <Route path="/fonlamalar/:id" element={<Fonlama />}/>
+          <Route path="/fon/:fonId/proje/:id" element={<Proje />}/>
           <Route path="/" element={<Anasayfa />}/>
         </Routes>
       </Container>

@@ -10,29 +10,7 @@ export const fonlamalar = {
         "status": "Tur Bitti",
         "status_code": 1,
         "deadline": "January, 1, 2023",
-        "projects": [
-            {
-                "title": "Akbank Tur 2 Proje 1",
-                "description": "Akbank Tur 2 Proje 1",
-                "image": "https://s.gitcoin.co/static/v2/images/home/gr15/gr15-bg-thanks.520170d7e8fd.webp",
-                "link": "https://www.google.com",
-                "id": "1",
-            },
-            {
-                "title": "Akbank Tur 2 Proje 1",
-                "description": "Akbank Tur 2 Proje 1",
-                "image": "https://s.gitcoin.co/static/v2/images/home/gr15/gr15-bg-thanks.520170d7e8fd.webp",
-                "link": "https://www.google.com",
-                "id": "1",
-            },
-            {
-                "title": "Akbank Tur 2 Proje 1",
-                "description": "Akbank Tur 2 Proje 1",
-                "image": "https://s.gitcoin.co/static/v2/images/home/gr15/gr15-bg-thanks.520170d7e8fd.webp",
-                "link": "https://www.google.com",
-                "id": "1",
-            }
-        ]
+        "projects": [2, 3]
     },
     "2": {
         "title": "AKBANK Tur 2",
@@ -42,29 +20,7 @@ export const fonlamalar = {
         "status": "Kalan süre 1 gün",
         "status_code": 2,
         "deadline": "January, 1, 2023",
-        "projects": [
-            {
-                "title": "Akbank Tur 2 Proje 1",
-                "description": "Akbank Tur 2 Proje 1",
-                "image": "https://s.gitcoin.co/static/v2/images/home/gr15/gr15-bg-thanks.520170d7e8fd.webp",
-                "link": "https://www.google.com",
-                "id": "1",
-            },
-            {
-                "title": "Akbank Tur 2 Proje 1",
-                "description": "Akbank Tur 2 Proje 1",
-                "image": "https://s.gitcoin.co/static/v2/images/home/gr15/gr15-bg-thanks.520170d7e8fd.webp",
-                "link": "https://www.google.com",
-                "id": "1",
-            },
-            {
-                "title": "Akbank Tur 2 Proje 1",
-                "description": "Akbank Tur 2 Proje 1",
-                "image": "https://s.gitcoin.co/static/v2/images/home/gr15/gr15-bg-thanks.520170d7e8fd.webp",
-                "link": "https://www.google.com",
-                "id": "1",
-            }
-        ]
+        "projects": [1, 2]
     },
     "3": {
         "title": "AKBANK Tur 3",
@@ -74,6 +30,7 @@ export const fonlamalar = {
         "status": "Başlamadı",
         "status_code": 3,
         "deadline": "January, 1, 2023",
+        "projects": []
     },
     "4": {
         "title": "AKBANK Tur 4",
@@ -83,5 +40,6 @@ export const fonlamalar = {
         "status": "Başlamadı",
         "status_code": 3,
         "deadline": "January, 1, 2023",
+        "projects": []
     }
 }
