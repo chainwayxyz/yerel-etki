@@ -35,7 +35,7 @@ contract Round is Ownable {
     }
 
     modifier onlyGrantOwner(uint16 _id) {
-        require(grants[_id].owner == msg.sender);
+        require(grants[_id].owner == msg.sender, "Not authorized!");
         _;
     }
 
@@ -49,8 +49,8 @@ contract Round is Ownable {
 
     //  GRANT FUNCTIONS
 
-    function registerGrant(address _owner, address _payee, string memory _ipfsURL) public beforeRoundStart() {
-        grants[grantCount] = Grant(grantCount, _owner, uint48(block.timestamp), uint48(block.timestamp), _payee, _ipfsURL);
+    function registerGrant(address _payee, string memory _ipfsURL) public beforeRoundStart {
+        grants[grantCount] = Grant(grantCount, msg.sender, uint48(block.timestamp), uint48(block.timestamp), _payee, _ipfsURL);
         ++grantCount;
     }
     
