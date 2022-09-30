@@ -8,7 +8,7 @@ describe("Round contract", function () {
 
         const Round = await ethers.getContractFactory("Round")
 
-        const roundCtc = await Round.deploy(1672520400, 1675198800, "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48")
+        const roundCtc = await Round.deploy(1672520400, 1675198800)
 
         await roundCtc.deployed()
 
@@ -21,7 +21,7 @@ describe("Round contract", function () {
 
         const Round = await ethers.getContractFactory("Round")
 
-        const roundCtc = await Round.deploy(1672520400, 1675198800, "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48")
+        const roundCtc = await Round.deploy(1672520400, 1675198800)
 
         await roundCtc.deployed()
 
@@ -54,7 +54,7 @@ describe("Round contract", function () {
             it("Shouldn't be able to donate", async function () {
                 const { roundCtc, donator1 } = await loadFixture(registerGrant)
 
-                await expect(roundCtc.connect(donator1).donate(0, 10000)).to.be.revertedWith("Round hasn't started yet!")
+                await expect(roundCtc.connect(donator1).donate(0, { value: 10**9 })).to.be.revertedWith("Round hasn't started yet!")
             })
         })
 
@@ -72,7 +72,7 @@ describe("Round contract", function () {
                 await roundCtc.provider.send("evm_setNextBlockTimestamp", [1672525500])
                 await roundCtc.provider.send("evm_mine")
 
-                await roundCtc.connect(donator1).donate(0, 10000)
+                await roundCtc.connect(donator1).donate(0, { value: 10**9 })
 
                 expect(await roundCtc.grantDonations(0)).to.be.equal([10001])
             })
