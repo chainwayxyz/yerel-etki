@@ -13,9 +13,28 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
+
 import useMetaMask from './hooks/metamask';
 
-const pages = ['Turlar', 'Komünite', 'Organizasyon'];
+
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
+
+
+import Fonlamalar from './components/Fonlamalar';
+import Fonlama from './components/Fonlama';
+import Anasayfa from './components/Anasayfa';
+
+
+// const pages = ['Turlar', 'Komünite', 'Organizasyon'];
+
+const pages = {
+  'Fonlamalar': '/fonlamalar'
+}
 
 
 
@@ -116,8 +135,8 @@ const App = () => {
                   display: { xs: 'block', md: 'none' },
                 }}
               >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                {Object.keys(pages).map((page) => (
+                  <MenuItem component={Link} to={pages[page]} key={page} onClick={handleCloseNavMenu}>
                     <Typography textAlign="center">{page}</Typography>
                   </MenuItem>
                 ))}
@@ -140,11 +159,12 @@ const App = () => {
                 textDecoration: 'none',
               }}
             >
-              LOGO
+              Subnet-QF
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              {pages.map((page) => (
+              {Object.keys(pages).map((page) => (
                 <Button
+                component={Link} to={pages[page]}
                   key={page}
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: 'white', display: 'block' }}
@@ -186,7 +206,13 @@ const App = () => {
           </Toolbar>
         </Container>
       </AppBar>
-      <h1>Account: {account}</h1>
+      <Container maxWidth="md">
+        <Routes>
+          <Route path="/fonlamalar" element={<Fonlamalar />}/>
+          <Route path="/fonlamalar/:id" element={<Fonlama />}/>
+          <Route path="/" element={<Anasayfa />}/>
+        </Routes>
+      </Container>
     </Box>
   );
 };
