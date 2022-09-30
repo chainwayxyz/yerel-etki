@@ -71,4 +71,30 @@ contract RoundContract is Ownable {
         grant.ipfsURL = _newURL;
         grant.lastUpdated = uint48(block.timestamp);
     }
+
+    function donate(uint16 _id, uint256 _amount) public {
+        require(startTime <= block.timestamp, "Round hasn't started yet!");
+        require(block.timestamp < endTime, "Round ended!");
+        require(grants[_id].id == _id, "Grant does not exist!");
+
+        donationToken.transferFrom(msg.sender, address(this), _amount);
+
+        grantDonations[_id].push(_amount);
+    }
+
+    //  SYSTEM HELPERS
+
+    //  To be used in the UI
+    function getAllGrants() public view returns(Grant[] memory) {
+        Grant[] memory grantList = new Grant[](grantCount);
+        for (uint16 i = 0; i < grantCount; i++) {
+            grantList[i] = grants[i];
+        }
+        return grantList;
+    }
+
+    //  To be used in the quadratic funding calc.
+    function getGrantDonationAmounts(uint16 _id) public view returns(uint256[] memory) {
+        return grantDonations[_id];
+    }
 }
