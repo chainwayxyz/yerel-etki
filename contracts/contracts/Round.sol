@@ -39,7 +39,7 @@ contract Round is Ownable {
     }
 
     modifier onlyGrantOwner(uint16 _id) {
-        require(grants[_id].owner == msg.sender);
+        require(grants[_id].owner == msg.sender, "Not authorized!");
         _;
     }
 
