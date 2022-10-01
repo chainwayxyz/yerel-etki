@@ -78,6 +78,7 @@ async function getProjects(setProjects){
 
             }
         } catch (e) {
+            console.log("Error issssss");
             console.log(e);
         }
     }
@@ -104,7 +105,9 @@ export default function Fonlama() {
     const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI);
 
     useEffect(() => {
-        getProjects(setProjects);
+        if(fonlama.status_code == 2){
+            getProjects(setProjects);
+        }
     }, []);
 
 
