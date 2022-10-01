@@ -15,7 +15,8 @@ let gas_limit = "0x100000"
 let wallet = new ethers.Wallet(private_key)
 let walletSigner = wallet.connect(window.ethersProvider)
 let contract_address = ""
-window.ethersProvider = new ethers.providers.InfuraProvider("goerli")
+const RPC_URL = "https://api.avax-test.network/ext/bc/C/rpc";
+window.ethersProvider = new ethers.providers.JsonRpcProvider(RPC_URL);
 
 
 

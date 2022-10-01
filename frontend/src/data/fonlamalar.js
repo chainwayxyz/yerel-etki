@@ -20,7 +20,7 @@ export const fonlamalar = {
         "status": "Kalan süre 1 gün",
         "status_code": 2,
         "deadline": "January, 1, 2023",
-        "projects": [1, 2]
+        "projects": []
     },
     "3": {
         "title": "AKBANK Tur 3",
