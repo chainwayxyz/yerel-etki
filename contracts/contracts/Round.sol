@@ -15,6 +15,7 @@ contract Round is Ownable {
         uint48 lastUpdated; // timestamp the grant data was last updated
         address payee; // address that receives funds donated to this grant
         string ipfsURL;
+        uint256 totalDonation;
     }
 
     //  to keep ids 
@@ -53,7 +54,7 @@ contract Round is Ownable {
     //  GRANT FUNCTIONS
 
     function registerGrant(address _payee, string memory _ipfsURL) public beforeRoundStart() {
-        grants[grantCount] = Grant(grantCount, msg.sender, uint48(block.timestamp), uint48(block.timestamp), _payee, _ipfsURL);
+        grants[grantCount] = Grant(grantCount, msg.sender, uint48(block.timestamp), uint48(block.timestamp), _payee, _ipfsURL, 0);
         ++grantCount;
 
         emit GrantRegistration(msg.sender, _payee, _ipfsURL);
@@ -80,9 +81,12 @@ contract Round is Ownable {
     function donate(uint16 _id) public payable{
         require(startTime <= block.timestamp, "Round hasn't started yet!");
         require(block.timestamp < endTime, "Round ended!");
-        require(grants[_id].id == _id, "Grant does not exist!");
+
+        Grant storage grant = grants[_id]
+        require(grant.id == _id, "Grant does not exist!");
 
         grantDonations[_id].push(msg.value);
+        grant.totalDonation += msg.value;
 
         emit Donation(msg.sender, msg.value);
     }
