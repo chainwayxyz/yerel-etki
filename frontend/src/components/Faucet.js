@@ -54,7 +54,7 @@ function FonlamaBaslat() {
         e.preventDefault();
         setLoading(true);
 
-        send_token(
+        await send_token(
             contract_address = "",
             send_token_amount = "0.1",
             to_address = to_address,
@@ -62,8 +62,6 @@ function FonlamaBaslat() {
             private_key = private_key
         )
         setLoading(false)
-        alert("Faucet done")
-
     }
 
 
@@ -78,7 +76,6 @@ function FonlamaBaslat() {
             width: '60%',
             mx: 'auto',
         }}>
-            <TextField fullWidth size='medium' margin="normal" type="text" label="Adres" value={adres} onChange={(e) => setAdres(e.target.value)} />
             <LoadingButton loading={loading} variant='outlined' onClick={apply}>1 Lira Al</LoadingButton>
         </Box>
     )

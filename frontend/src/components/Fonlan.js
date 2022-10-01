@@ -5,7 +5,11 @@ import { Web3Storage } from 'web3.storage'
 import { v4 as uuidv4 } from 'uuid';
 import LoadingButton from '@mui/lab/LoadingButton';
 
-function FonlamaBaslat() {
+import {contracts} from '../data/contracts';
+import { ethers } from "ethers";
+
+
+function Fonlan() {
     const { account, isActive } = useMetaMask();
     const [title, setTitle] = React.useState();
     const [description, setDescription] = React.useState();
@@ -46,7 +50,29 @@ function FonlamaBaslat() {
 
         setCID(metadataCID)
 
-        
+        const CONTRACT_ADDRESS = contracts.Round.address;
+        const ABI = contracts.Round.abi;
+
+        const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI);
+
+        const tx = await contract.populateTransaction.registerGrant(account, metadataCID);
+
+        console.log(tx);
+
+        const txHash = await window.ethereum.request({
+            method: 'eth_sendTransaction',
+            params: [
+                {
+                    from: account,
+                    ...tx
+                }
+            ]
+        })
+
+        console.log(txHash);
+    
+
+        setLoading(false);
 
         // call apply contract
     }
@@ -68,7 +94,7 @@ function FonlamaBaslat() {
         }}>
             { isActive ? (
                 <>
-                    <h1>Fonlama Başvur</h1>
+                    <h1>Fonlanmak için başvur</h1>
                     <TextField fullWidth size='medium' margin="normal" type="text" label="Başlık" value={title} onChange={(e) => setTitle(e.target.value)} />
                     <TextField fullWidth size='medium' margin="normal" type="text" multiline rows={4} label="Açıklama" value={description} onChange={(e) => setDescription(e.target.value)} />
                     <TextField fullWidth size='small' margin="normal" type="file" label="Resim" onChange={(e) => setImage(e.target.files)} focused />
@@ -84,4 +110,4 @@ function FonlamaBaslat() {
     )
 }
 
-export default FonlamaBaslat
+export default Fonlan
