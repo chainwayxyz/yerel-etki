@@ -78,12 +78,34 @@ async function getProjects(setProject, id){
         console.log(e);
     }
 
-
-    // const res = await client.get(cid)
-    // alert(allProjects);
-
-    // return projects;
 }
+
+
+async function getMiktar(setMiktar, id){
+    const ethereum = window.ethereum;
+    const accounts = await ethereum.request({
+        method: "eth_requestAccounts",
+    });
+
+    const provider = new ethers.providers.Web3Provider(ethereum)
+    const walletAddress = accounts[0]    // first account in MetaMask
+    const signer = provider.getSigner(walletAddress)
+
+    const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+    const donationAmounts = await contract.getGrantDonationAmounts(id);
+    let miktar = 0;
+    donationAmounts.forEach(amount => {
+        miktar += parseFloat(ethers.utils.formatEther(amount));
+        console.log(parseFloat(ethers.utils.formatEther(amount)));
+        
+    });
+    setMiktar(miktar);
+    // console.log("donation amounts", donationAmounts);
+
+
+
+}
+
 
 
 
@@ -93,12 +115,15 @@ export default function Proje() {
     const [bagis, setBagis] = React.useState("0");
     const { account, isActive } = useMetaMask();
 
+    const [miktar, setMiktar] = React.useState(0);
+
 
 
     let { id } = useParams();
 
     useEffect(() => {
         getProjects(setProject, id);
+        getMiktar(setMiktar, id);
     }, []);
 
 
@@ -154,6 +179,9 @@ export default function Proje() {
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
               {project.title}
+            </Typography>
+            <Typography gutterBottom variant="h5" component="div">
+              Bağışlanan miktar: {miktar} ATRY
             </Typography>
             <Typography variant="body2" color="text.secondary">
                 {project.description}
