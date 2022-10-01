@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "uuid": "^9.0.0",
-    "web3.storage": "^4.4.0"
-  }
-}

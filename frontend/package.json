@@ -19,7 +19,9 @@
     "react-router-dom": "^6.4.1",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4",
-    "web3": "^1.8.0"
+    "web3": "^1.8.0",
+    "uuid": "^9.0.0",
+    "web3.storage": "^4.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
