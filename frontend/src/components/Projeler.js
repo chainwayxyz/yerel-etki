@@ -69,24 +69,12 @@ async function getProjects(setProject, id){
             const STARTING_URL = 'https://gateway.pinata.cloud/ipfs/';
             const IPFS_CID =STARTING_URL + IPFS_IMG_LINK.substring(7);
             content.image = IPFS_CID;
-            // alert(IPFS_CID);
-
-            // const imgRes = await storage.get(IPFS_CID);
-            // console.log("ImgRes: ", imgRes);
-            // const imgFiles = await imgRes.files()
-            // console.log("imgFiles", imgFiles)
-            // for (const imgFile of imgFiles) {
-            //     console.log(`${imgFile.cid}: ${imgFile.name} (${imgFile.size} bytes)`)
-            //     content.image = await imgFile.text()
-
-            //     console.log(content.image)
-            // }
-            // console.log("imgRes", imgRes)
         setProject(content);
     // allProjects.push(content);
 
         }
     } catch (e) {
+
         console.log(e);
     }
 
@@ -102,7 +90,7 @@ async function getProjects(setProject, id){
 export default function Proje() {
     const [project, setProject] = React.useState({});
     const [loading, setLoading] = React.useState(false);
-    const [bagis, setBagis] = React.useState(0);
+    const [bagis, setBagis] = React.useState("0");
     const { account, isActive } = useMetaMask();
 
 
@@ -115,8 +103,18 @@ export default function Proje() {
 
 
     const donate = async () => {
-        setLoading(true);
-
+        console.log("Donate");
+        setLoading(true);  
+        // alert(bagis);
+        // alert(typeof(bagis));
+        // alert(account);
+        // alert(typeof(account));
+        console.log(bagis)
+        console.log(typeof(ethers.utils.parseEther(bagis.toString()).toString()));
+        console.log(typeof(account));
+        console.log(typeof(id));
+        let valueStr = ethers.utils.parseEther(bagis.toString()).toString();
+        console.log(valueStr);
         const tx = await contract.populateTransaction.donate(id);
 
         console.log(tx);
@@ -126,6 +124,7 @@ export default function Proje() {
             params: [
                 {
                     from: account,
+                    value: ethers.utils.parseEther(bagis.toString()).toHexString(),
                     ...tx
                 }
             ]
@@ -133,14 +132,12 @@ export default function Proje() {
 
         console.log(txHash);
         setBagis(0);
-
-        // alert("Bağış yapıldı " + id);
         setLoading(false);
     }
 
     const fonDurumu =<Box> <Item>
             <Stack spacing={2}>
-                <TextField id="outlined-basic" label="Bağış miktarı" variant="outlined" value={bagis} onChange={(e) => setBagis(e.target.files)} />
+                <TextField id="outlined-basic" label="Bağış miktarı" variant="outlined" value={bagis} onChange={(e) => setBagis(e.target.value)} />
                 <LoadingButton loading={loading} variant="outlined" onClick={donate}>Bağış yap</LoadingButton>
             </Stack>
         </Item>

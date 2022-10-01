@@ -78,6 +78,7 @@ async function getProjects(setProjects){
 
             }
         } catch (e) {
+            console.log("Error issssss");
             console.log(e);
         }
     }
