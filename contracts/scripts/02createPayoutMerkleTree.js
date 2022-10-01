@@ -1,4 +1,3 @@
-require('dotenv').config()
 const { BigNumber } = require('ethers')
 const { ethers } = require('hardhat')
 const { BigNumber: bn } = require('bignumber.js')
