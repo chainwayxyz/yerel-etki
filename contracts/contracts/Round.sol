@@ -52,7 +52,7 @@ contract Round is Ownable {
 
     //  GRANT FUNCTIONS
 
-    function registerGrant( address _payee, string memory _ipfsURL) public beforeRoundStart() {
+    function registerGrant(address _payee, string memory _ipfsURL) public beforeRoundStart() {
         grants[grantCount] = Grant(grantCount, msg.sender, uint48(block.timestamp), uint48(block.timestamp), _payee, _ipfsURL);
         ++grantCount;
 
