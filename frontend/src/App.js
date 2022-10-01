@@ -29,6 +29,7 @@ import Fonlamalar from './components/Fonlamalar';
 import Fonlama from './components/Fonlama';
 import Proje from './components/Proje';
 import Anasayfa from './components/Anasayfa';
+import FonlamaBaslat from './components/FonlamaBaslat';
 
 
 // const pages = ['Turlar', 'Komünite', 'Organizasyon'];
@@ -178,7 +179,7 @@ const App = () => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="https://storage.googleapis.com/opensea-static/opensea-profile/12.png" />
+                  <Avatar alt="Remy Sharp" src="https://cdn-icons-png.flaticon.com/512/3360/3360459.png" />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -209,6 +210,7 @@ const App = () => {
       </AppBar>
       <Container maxWidth="md">
         <Routes>
+          <Route path="/fonlamalar/basvur" element={<FonlamaBaslat />} />
           <Route path="/fonlamalar" element={<Fonlamalar />}/>
           <Route path="/fonlamalar/:id" element={<Fonlama />}/>
           <Route path="/fon/:fonId/proje/:id" element={<Proje />}/>
