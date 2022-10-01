@@ -29,7 +29,7 @@ export default function MediaCard(
         alt="green iguana"
       />
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h5" fontWeight="bold" component="div">
             {title}
         </Typography>
         <Typography sx={{ mb: 1.5 }}>
@@ -40,7 +40,7 @@ export default function MediaCard(
         </Typography>
       </CardContent>
       <CardActions>
-        <Button component={Link} to={link}   size="small">Detaylar</Button>
+        <Button component={Link} to={link} color="warning" variant='outlined'  size="small">Detaylar</Button>
       </CardActions>
     </Card>
   );

@@ -43,7 +43,7 @@ import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalance
 const pages = {
   'Fonlamalar': '/fonlamalar',
   'Fonlan': '/fonlamalar/basvur',
-  'Faucet': '/faucet',
+  'Test Tokeni': '/faucet',
 }
 
 
@@ -179,7 +179,7 @@ const App = () => {
                 component={Link} to={pages[page]}
                   key={page}
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  sx={{ my: 2, color: 'white', display: 'block', fontSize: '16px' }}
                 >
                   {page}
                 </Button>

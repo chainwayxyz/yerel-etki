@@ -9,6 +9,8 @@ import { Web3ReactProvider } from '@web3-react/core';
 import { MetaMaskProvider } from './hooks/metamask';
 
 import { BrowserRouter, Route, Link } from "react-router-dom";
+import { ThemeProvider } from '@mui/material';
+import { theme } from './components/Theme';
 
 function getLibrary(provider, connector) {
   return new Web3(provider);
@@ -20,7 +22,9 @@ root.render(
     <React.StrictMode>
       <Web3ReactProvider getLibrary={getLibrary}>
         <MetaMaskProvider>
+          <ThemeProvider theme={theme}>
           <App />
+          </ThemeProvider>
         </MetaMaskProvider>
       </Web3ReactProvider>
     </React.StrictMode>

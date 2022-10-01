@@ -8,47 +8,28 @@ export const theme = createTheme({
     palette: {
         type: 'dark',
         primary: {
-          main: '#0f0',
+          main: '#68d49c',
+
+        },
+        warning: {
+            main: '#4dbd83',
         },
         background: {
-          default: '#111111',
-          paper: '#212121',
+          default: '#68d49c',
         },
       },
       typography: {
-        fontFamily: 'Open Sans',
-        h1: {
-          fontFamily: 'Ubuntu Mono',
-        },
-        h2: {
-          fontFamily: 'Ubuntu Mono',
-        },
-        h3: {
-          fontFamily: 'Ubuntu Mono',
-        },
-        h4: {
-          fontFamily: 'Ubuntu Mono',
-        },
-        h6: {
-          fontFamily: 'Ubuntu Mono',
-        },
-        h5: {
-          fontFamily: 'Ubuntu Mono',
-        },
-        subtitle1: {
-          fontFamily: 'Ubuntu Mono',
-        },
-        subtitle2: {
-          fontFamily: 'Ubuntu Mono',
-        },
-        button: {
-          fontFamily: 'Ubuntu Mono',
-          fontWeight: 900,
-        },
-        overline: {
-          fontFamily: 'Ubuntu Mono',
-        },
+        fontFamily: 'Merriweather, serif'
       },
+      components: {
+        MuiButton: {
+          styleOverrides: {
+            primary: {
+              color: '#68d49c',
+            },
+          },
+        }
+      }
   });
 
 export const Item = styled(Paper)(({ theme }) => ({
@@ -56,7 +37,6 @@ export const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
     padding: theme.spacing(1),
     textAlign: 'center',
-    color: theme.palette.text.secondary,
+    color: 'theme.palette.text.secondary',
     //Add more shadow
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
   }));

@@ -77,7 +77,7 @@ function FonlamaBaslat() {
             width: '60%',
             mx: 'auto',
         }}>
-            <LoadingButton loading={loading} variant='outlined' onClick={apply}>1 Lira Al</LoadingButton>
+            <LoadingButton loading={loading} color='primary' variant='outlined' onClick={apply}>Test Tokeni (ATRY) Talep Et</LoadingButton>
         </Box>
     )
 }
