@@ -29,13 +29,16 @@ import Fonlamalar from './components/Fonlamalar';
 import Fonlama from './components/Fonlama';
 import Proje from './components/Proje';
 import Anasayfa from './components/Anasayfa';
-import FonlamaBaslat from './components/FonlamaBaslat';
+import Fonlan from './components/Fonlan';
+import Faucet from './components/Faucet';
 
 
 // const pages = ['Turlar', 'Komünite', 'Organizasyon'];
 
 const pages = {
-  'Fonlamalar': '/fonlamalar'
+  'Fonlamalar': '/fonlamalar',
+  'Fonlan': '/fonlamalar/basvur',
+  'Faucet': '/faucet',
 }
 
 
@@ -210,7 +213,8 @@ const App = () => {
       </AppBar>
       <Container maxWidth="md">
         <Routes>
-          <Route path="/fonlamalar/basvur" element={<FonlamaBaslat />} />
+          <Route path="/faucet" element={<Faucet />} />
+          <Route path="/fonlamalar/basvur" element={<Fonlan />} />
           <Route path="/fonlamalar" element={<Fonlamalar />}/>
           <Route path="/fonlamalar/:id" element={<Fonlama />}/>
           <Route path="/fon/:fonId/proje/:id" element={<Proje />}/>
