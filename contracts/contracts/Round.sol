@@ -87,12 +87,12 @@ contract Round is Ownable {
         emit Donation(msg.sender, msg.value);
     }
 
-    function payout(address _payoutAddress) public onlyOwner {
+    function payout(address payable _payoutAddress) public onlyOwner {
         require(endTime < block.timestamp, "Round hasn't end yet!");
 
-        _payoutAddr.transfer(address(this).balance);
+        _payoutAddress.transfer(address(this).balance);
 
-        emit Payout(_payoutAddr, address(this).balance);
+        emit Payout(_payoutAddress, address(this).balance);
     }
 
     

@@ -19,7 +19,7 @@ contract MatchingFund is Ownable {
         emit Donation(msg.sender, msg.value);
     }
 
-    function payout(address _payoutAddr) public  payable onlyOwner {
+    function payout(address payable _payoutAddr) public  payable onlyOwner {
         _payoutAddr.transfer(address(this).balance);
         
         paidOut = true;
