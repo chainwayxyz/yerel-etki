@@ -46,6 +46,8 @@ function FonlamaBaslat() {
 
         setCID(metadataCID)
 
+        
+
         // call apply contract
     }
 
