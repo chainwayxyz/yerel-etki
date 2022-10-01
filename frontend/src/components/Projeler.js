@@ -66,7 +66,7 @@ async function getProjects(setProject, id){
             content.project_id = id;
             const IPFS_IMG_LINK = content.image;
             // split IPFS_IMG_LINK from /
-            const STARTING_URL = 'https://gateway.pinata.cloud/ipfs/';
+            const STARTING_URL = 'https://ipfs.io/ipfs/';
             const IPFS_CID =STARTING_URL + IPFS_IMG_LINK.substring(7);
             content.image = IPFS_CID;
         setProject(content);
