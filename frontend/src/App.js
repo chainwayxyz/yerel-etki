@@ -14,6 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
 
+
 import useMetaMask from './hooks/metamask';
 
 
@@ -32,6 +33,9 @@ import Anasayfa from './components/Anasayfa';
 import Fonlan from './components/Fonlan';
 import Faucet from './components/Faucet';
 
+import {theme} from './components/Theme';
+import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
+
 
 // const pages = ['Turlar', 'Komünite', 'Organizasyon'];
 
@@ -40,6 +44,8 @@ const pages = {
   'Fonlan': '/fonlamalar/basvur',
   'Faucet': '/faucet',
 }
+
+
 
 
 
@@ -89,7 +95,7 @@ const App = () => {
 
   return (
     <Box>
-      <AppBar position="static">
+      <AppBar position="static" theme={theme}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -182,7 +188,8 @@ const App = () => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="https://cdn-icons-png.flaticon.com/512/3360/3360459.png" />
+                  <AccountBalanceWalletOutlinedIcon color="inherit" fontSize="large" sx={{color:"white"}}/>
+                  {/* <Avatar alt="Remy Sharp" src="https://cdn-icons-png.flaticon.com/512/3360/3360459.png" /> */}
                 </IconButton>
               </Tooltip>
               <Menu
@@ -211,7 +218,7 @@ const App = () => {
           </Toolbar>
         </Container>
       </AppBar>
-      <Container maxWidth="md">
+      <Container maxWidth="md" sx={{padding:4}}>
         <Routes>
           <Route path="/faucet" element={<Faucet />} />
           <Route path="/fonlamalar/basvur" element={<Fonlan />} />
