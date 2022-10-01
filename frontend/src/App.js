@@ -74,12 +74,10 @@ const App = () => {
 
 
   const employSettings = (setting) => {
-    alert(`You clicked ${setting}`);
     // if settings starts with "Metamask" then connect to metamask
     if (setting.startsWith("Metamaskını")) {
       connect();
     } else if(setting.startsWith("Metamask")) {
-      alert("Metamask bağlantısı kesiliyor...");
       disconnect();
     }
   };
@@ -99,7 +97,7 @@ const App = () => {
       <AppBar position="static" theme={theme}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+            <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, width: 40, height: 20}}  ><img src={require('./static/logo.png')}/></Box>
             <Typography
               variant="h6"
               noWrap
@@ -113,9 +111,10 @@ const App = () => {
                 letterSpacing: '.3rem',
                 color: 'inherit',
                 textDecoration: 'none',
+                color: 'white',
               }}
             >
-              Subnet-QF
+              QF
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

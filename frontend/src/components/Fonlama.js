@@ -21,7 +21,8 @@ import { theme, Item } from './Theme';
 import {contracts} from '../data/contracts';
 import { ethers } from "ethers";
 import useMetaMask from '../hooks/metamask';
-import { Web3Storage } from 'web3.storage'
+import { Web3Storage } from 'web3.storage';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 
 const CONTRACT_ADDRESS = contracts.Round.address;
@@ -90,6 +91,19 @@ async function getProjects(setProjects){
     // return projects;
 }
 
+async function arrangeFunds(setMatchFunds, setTotalFunds){
+    const ethereum = window.ethereum;
+    const provider = new ethers.providers.Web3Provider(ethereum)
+    // Get balance of contracts.Round.address
+    const balance = await provider.getBalance(contracts.Round.address);
+    console.log("Balance: ", balance);
+    setTotalFunds(ethers.utils.formatEther(balance).toString());
+    // Get balance of contracts.Match.address
+    const matchBalance = await provider.getBalance(contracts.Match.address);
+    console.log("Match Balance: ", matchBalance);
+    setMatchFunds(ethers.utils.formatEther(matchBalance).toString());
+}
+
 
 export default function Fonlama() {
     const { account, isActive } = useMetaMask();
@@ -99,6 +113,12 @@ export default function Fonlama() {
     const fonlama = fonlamalar[id];
     const mockProjects = fonlama.projects.map(function (project_id){projeler[project_id].project_id = project_id; return projeler[project_id]});
     const [projects, setProjects] = React.useState(mockProjects);
+    const [matchFunds, setMatchFunds] = React.useState(0);
+    const [totalFunds, setTotalFunds] = React.useState(0);
+
+    const [loading, setLoading] = React.useState(false);
+    const [bagis, setBagis] = React.useState("0");
+
 
     const CONTRACT_ADDRESS = contracts.Round.address;
     const ABI = contracts.Round.abi;
@@ -107,8 +127,46 @@ export default function Fonlama() {
     useEffect(() => {
         if(fonlama.status_code == 2){
             getProjects(setProjects);
+            arrangeFunds(setMatchFunds, setTotalFunds);
         }
     }, []);
+
+
+
+
+
+    const donate = async () => {
+        setLoading(true);  
+        // alert(bagis);
+        // alert(typeof(bagis));
+        // alert(account);
+        // alert(typeof(account));
+        const CONTRACT_ADDRESS = contracts.Match.address;
+        const ABI = contracts.Match.abi;
+        const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI);
+    
+        let valueStr = ethers.utils.parseEther(bagis.toString()).toString();
+        const tx = await contract.populateTransaction.donate();
+
+        console.log(tx);
+
+        const txHash = await window.ethereum.request({
+            method: 'eth_sendTransaction',
+            params: [
+                {
+                    from: account,
+                    value: ethers.utils.parseEther(bagis.toString()).toHexString(),
+                    ...tx
+                }
+            ]
+        })
+
+        console.log(txHash);
+        setBagis(0);
+        setLoading(false);
+    }
+
+
 
 
     let deadline =fonlama.deadline;
@@ -116,8 +174,8 @@ export default function Fonlama() {
     let fonDurumu;
     if(fonlama.status_code === 1) {
         fonDurumu = <Box><Item>
-            <h1>Toplam fon miktarı: 10000TL</h1>
-            <h1>Toplam katkı miktarı: 10000TL</h1>
+            <h1>Eşleme fonu: 1234 ATRY</h1>
+            <h1>Bağışlanan fon: 5432 ATRY</h1>
         </Item>
         <h1>Projeler</h1>
             <Grid container spacing={2}>
@@ -130,12 +188,12 @@ export default function Fonlama() {
         </Box>;
     } else if(fonlama.status_code === 2) {
         fonDurumu =<Box> <Item>
-            <h1>Toplam fon miktarı: 10000TL</h1>
-            <h1>Toplam katkı miktarı: 10000TL</h1>
-            <h3>Eşleme fonuna bağış yap:</h3>
+            <h1>Eşleme fonu: {matchFunds} ATRY</h1>
+            <h1>Bağışlanan fon: {totalFunds} ATRY</h1>
+            <h2>Eşleme fonuna bağış yap (Minimum 5000₺):</h2>
             <Stack spacing={2}>
-                <TextField id="outlined-basic" label="Bağış miktarı" variant="outlined" />
-                <Button variant="outlined">Bağış yap</Button>
+                <TextField id="outlined-basic" label="Bağış miktarı" variant="outlined" value={bagis} onChange={(e) => setBagis(e.target.value)} />
+                <LoadingButton variant="outlined" onClick={donate} loading={loading}>Bağış yap</LoadingButton>
             </Stack>
         </Item>
         <h1>Projeler</h1>
