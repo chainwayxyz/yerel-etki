@@ -15,7 +15,7 @@ const main = async () => {
 
     console.log('Deploying Matching Fund')
     const MatchingFund = await ethers.getContractFactory("MatchingFund")
-    const matchingFundCtc = await MatchingFund.deploy()
+    const matchingFundCtc = await MatchingFund.deploy(ethers.utils.parseUnits("5000", "ether"))
     await matchingFundCtc.deployed()
     console.log('MatchingFund contract:', matchingFundCtc.address)
 }

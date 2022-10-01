@@ -6,15 +6,17 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 contract MatchingFund is Ownable {
     //  No donations after payout
     bool public fundClosed;
+    uint256 public minAmount;
 
     event Payout(address payoutCtc, uint256 amount);
     event Donation(address donator, uint256 amount);
 
-    constructor() {
-
+    constructor(uint256 _minAmount) {
+        minAmount = _minAmount;
     }
 
     function donate() public payable {
+        require(msg.value >= minAmount, "Donation smaller than minAmount");
         require(!fundClosed, "Pool already paid out!");
         emit Donation(msg.sender, msg.value);
     }
