@@ -5,12 +5,8 @@ const { MerkleTree } = require('merkletreejs')
 const fs = require('fs');
 
 
-const ROUND_ADDR = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
-const MATCH_FUND_ADDR = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
-
-
-const roundContract = (await ethers.getContractFactory("Round")).attach(ROUND_ADDR)
-// const matchFundContract = (await ethers.getContractFactory("MatchingFund")).attach(MATCH_FUND_ADDR)
+const roundContract = (await ethers.getContractFactory("Round")).deployed()
+const matchFundContract = (await ethers.getContractFactory("MatchingFund")).deployed()
 
 
 function sqrt(value) {
@@ -18,7 +14,7 @@ function sqrt(value) {
 }
 
 const main = async () => {
-    const matchBalance = await ethers.provider.getBalance(MATCH_FUND_ADDR)
+    const matchBalance = await ethers.provider.getBalance(matchFundContract.address)
     const grantCount = await roundContract.grantCount()
 
     let cumulativeQuadSum = BigNumber.from(0)
