@@ -1,3 +1,4 @@
+require('dotenv').config()
 require('@openzeppelin/hardhat-upgrades');
 require("@nomicfoundation/hardhat-toolbox");
 
@@ -19,6 +20,13 @@ module.exports = {
     },
     hardhat: {
       chainId: 1337 // We set 1337 to make interacting with MetaMask simpler
+    },
+    fuji: {
+      chainId: 43113,
+      url: "https://api.avax-test.network/ext/bc/C/rpc",
+      accounts: [
+        process.env.PRIVATE_KEY
+      ]
     }
   }
 };

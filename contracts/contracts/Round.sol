@@ -82,7 +82,7 @@ contract Round is Ownable {
         require(startTime <= block.timestamp, "Round hasn't started yet!");
         require(block.timestamp < endTime, "Round ended!");
 
-        Grant storage grant = grants[_id]
+        Grant storage grant = grants[_id];
         require(grant.id == _id, "Grant does not exist!");
 
         grantDonations[_id].push(msg.value);
