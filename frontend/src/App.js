@@ -114,7 +114,7 @@ const App = () => {
                 color: 'white',
               }}
             >
-              QF
+              
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -153,7 +153,8 @@ const App = () => {
                 ))}
               </Menu>
             </Box>
-            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+            {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
+            <Box sx={{ display:  { xs: 'flex', md: 'none' }, mr: 1, width: 40, height: 20}}  ><img src={require('./static/logo.png')}/></Box>
             <Typography
               variant="h5"
               noWrap
@@ -170,7 +171,7 @@ const App = () => {
                 textDecoration: 'none',
               }}
             >
-              Subnet-QF
+              
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {Object.keys(pages).map((page) => (
