@@ -65,7 +65,7 @@ describe("Payout", function () {
     it("should claim", async function () {
         const [owner, user1, user2] = await ethers.getSigners();
 
-        owner.sendTransaction({
+        await owner.sendTransaction({
             to: payout.address,
             value: ethers.utils.parseEther("10")
         })
@@ -81,5 +81,23 @@ describe("Payout", function () {
 
         expect(await sbt.balanceOf(user1.address)).to.equal(1);
         expect(await user1.getBalance()).gt(beforeBalance);
+    })
+
+    it("should not claim twice", async function () {
+        const [owner, user1, user2] = await ethers.getSigners();
+
+        await owner.sendTransaction({
+            to: payout.address,
+            value: ethers.utils.parseEther("10")
+        })
+
+        const node = ethers.utils.solidityKeccak256(['uint256', 'address', 'uint256'], [0, user1.address, ethers.utils.parseEther("1")])
+        const proof = merkleTree.getHexProof(
+            node
+        );
+
+        await payout.connect(user1).claim(0, user1.address, ethers.utils.parseEther("1"), proof);
+
+        await expect(payout.connect(user1).claim(0, user1.address, ethers.utils.parseEther("1"), proof)).to.be.revertedWith("Already claimed.");
     })
 });
